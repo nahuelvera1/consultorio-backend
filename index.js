@@ -25,5 +25,5 @@ app.use('/', rutasTratamientos); // <--- 2. USAR
 // ... resto del código (app.listen, etc)
 const PORT = 3000;
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor corriendo en https://api-consultorio-usf0.onrender.com${PORT}`);
+    console.log(`🚀 Servidor corriendo en  http://localhost:3000${PORT}`);
 });
