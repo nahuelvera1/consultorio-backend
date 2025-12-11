@@ -1,11 +1,16 @@
 const mysql = require('mysql2');
 
-// Creamos la conexión
+// Creamos la conexión INTELIGENTE
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',      // Usuario por defecto de XAMPP/MySQL
-    password: '1234',      // Si tienes contraseña en MySQL, ponla aquí. Si no, déjalo vacío.
-    database: 'consultorio_dental' // El nombre exacto de la base que creamos
+    // Le decimos: "Usá la variable de Render, y si no existe (porque estoy en mi PC), usá 'localhost'"
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASSWORD || '1234',
+    database: process.env.DB_NAME || 'consultorio_dental',
+    port: process.env.DB_PORT || 3306, // TiDB usa el puerto 4000, esto es CLAVE
+    ssl: {
+        rejectUnauthorized: false // Esto es necesario para que TiDB te deje entrar seguro
+    }
 });
 
 // Probamos si funciona la conexión
@@ -14,7 +19,7 @@ db.connect((err) => {
         console.error('❌ Error conectando a la Base de Datos:', err);
         return;
     }
-    console.log('✅ ¡Conectado exitosamente a la Base de Datos MySQL!');
+    console.log('✅ ¡Conectado exitosamente a la Base de Datos!');
 });
 
-module.exports = db; // Exportamos la conexión para usarla en otros archivos
+module.exports = db;
